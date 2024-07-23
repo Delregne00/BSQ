@@ -1,0 +1,129 @@
+
+Explicación detallada de variables y métodos:
+
+1. Variables principales:
+   - matrix[ROWS][COLS]: Matriz principal que representAlmacenan la posición a el espacio de trabajo.
+   - maxSize: Almacena el tamaño del cuadrado más grande encontrado.
+   - maxRow, maxCol: (fila y columna) del cuadrado más grande.
+
+2. Métodos principales:
+
+   a) findMaxSquareSize(matrix, startRow, startCol):
+      - Propósito: Encuentra el tamaño máximo de un cuadrado que se puede formar desde una posición dada.
+      - Parámetros:
+        * matrix: La matriz de trabajo.
+        * startRow, startCol: Posición inicial desde donde se busca el cuadrado.
+      - Funcionamiento:
+        * Usa un bucle while para incrementar el tamaño del cuadrado.
+        * Verifica si cada posición dentro del cuadrado potencial está vacía.
+        * Si encuentra un obstáculo, detiene la búsqueda y devuelve el último tamaño válido.
+      - Retorno: El tamaño máximo del cuadrado encontrado.
+
+   b) drawSquare(matrix, startRow, startCol, size, symbol):
+      - Propósito: Dibuja un cuadrado en la matriz.
+      - Parámetros:
+        * matrix: La matriz donde se dibuja.
+        * startRow, startCol: Posición inicial del cuadrado.
+        * size: Tamaño del cuadrado a dibujar.
+        * symbol: Carácter usado para dibujar el cuadrado.
+      - Funcionamiento:
+        * Usa bucles anidados para recorrer el área del cuadrado.
+        * Reemplaza los espacios vacíos con el símbolo especificado.
+
+   c) printMatrix(matrix):
+      - Propósito: Imprime la matriz en la consola.
+      - Parámetro:
+        * matrix: La matriz a imprimir.
+      - Funcionamiento:
+        * Usa bucles anidados para recorrer toda la matriz.
+        * Imprime cada carácter seguido de un espacio.
+        * Añade un salto de línea al final de cada fila.
+
+3. Lógica del algoritmo:
+   - El algoritmo principal en main() tiene tres fases:
+
+     1. Búsqueda: 
+        - Recorre toda la matriz.
+        - Para cada espacio vacío, llama a findMaxSquareSize().
+        - Actualiza maxSize, maxRow, y maxCol si encuentra un cuadrado más grande.
+
+     2. Limpieza:
+        - Recorre la matriz nuevamente.
+        - Reemplaza todo con espacios, excepto los obstáculos ('o').
+
+     3. Dibujo:
+        - Si se encontró un cuadrado válido (maxSize > 0), llama a drawSquare().
+        - Dibuja el cuadrado más grande usando '#'.
+
+   - Este enfoque garantiza que:
+     a) Se encuentra el cuadrado más grande posible.
+     b) En caso de empate, se elige el cuadrado más arriba y a la izquierda.
+     c) Solo se dibuja el cuadrado más grande, dejando el resto de la matriz en blanco.
+     d) Los obstáculos originales se mantienen intactos.
+
+
+int main(void) {
+    // Inicializamos la matriz con espacios y algunos obstáculos
+    char matrix[ROWS][COLS] = {
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', 'o', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', 'o', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', 'o', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '},
+        {' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '}
+    };
+
+    int maxSize = 0;
+    int maxRow = 0, maxCol = 0;
+    int i = 0, j;
+
+    // Encontrar el cuadrado más grande
+    while (i < ROWS) {
+        j = 0;
+        while (j < COLS) {
+            if (matrix[i][j] == ' ') {
+                // Si encontramos un espacio vacío, buscamos el cuadrado más grande posible desde esa posición
+                int size = findMaxSquareSize(matrix, i, j);
+                if (size > maxSize) {
+                    // Si encontramos un cuadrado más grande, actualizamos los valores máximos
+                    maxSize = size;
+                    maxRow = i;
+                    maxCol = j;
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+
+    // Limpiar la matriz (excepto los obstáculos)
+    i = 0;
+    while (i < ROWS) {
+        j = 0;
+        while (j < COLS) {
+            if (matrix[i][j] != 'o') {
+                matrix[i][j] = ' ';
+            }
+            j++;
+        }
+        i++;
+    }
+
+    // Dibujar el cuadrado más grande
+    if (maxSize > 0) {
+        drawSquare(matrix, maxRow, maxCol, maxSize, '#');
+    }
+
+    // Imprimir el resultado
+    printf("Matriz con el cuadrado más grande:\n");
+    printMatrix(matrix);
+    printf("Tamaño del cuadrado más grande: %d\n", maxSize);
+    printf("Posición: (%d, %d)\n", maxRow, maxCol);
+
+    return 0;
+}
+*/
