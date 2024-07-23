@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+# Verificar la cantidad de argumentos
+die "Usage: $0 x y density\n" unless (scalar(@ARGV) == 3);
+
+# Obtener los argumentos
+my ($x, $y, $density) = @ARGV;
+
+# Nombre del archivo de salida
+my $output_file = 'map';
+
+# Abrir el archivo de salida
+open(my $fh, '>', $output_file) or die "Cannot open file $output_file: $!";
+
+# Generar el contenido y escribirlo en el archivo
+print $fh "$y.ox\n";
+for (my $i = 0; $i < $y; $i++) {
+    for (my $j = 0; $j < $x; $j++) {
+        if (int(rand($y) * 2) < $density) {
+            print $fh "o";
+        } else {
+            print $fh ".";
+        }
+    }
+    print $fh "\n";
+}
+
+# Cerrar el archivo
+close($fh);
